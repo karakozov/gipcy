@@ -99,7 +99,7 @@ GIPCY_API int IPC_writePrivateProfileString(const IPC_str *lpAppName, const IPC_
 
 //-----------------------------------------------------------------------------
 
-void* IPC_virtAlloc(int nSize)
+void* IPC_virtAlloc(size_t nSize)
 {
 	void* ptr = VirtualAlloc(NULL, nSize, MEM_COMMIT, PAGE_READWRITE);
 
@@ -110,14 +110,14 @@ void* IPC_virtAlloc(int nSize)
 
 int IPC_virtFree(void *ptr)
 {
-	BOOL ret = VirtualFree(ptr, 0, MEM_RELEASE);
+	int ret = VirtualFree(ptr, 0, MEM_RELEASE);
 
 	return 0;
 }
 
 //-----------------------------------------------------------------------------
 
-void* IPC_heapAlloc(int nSize)
+void* IPC_heapAlloc(size_t nSize)
 {
 	return HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, nSize);
 }
@@ -168,7 +168,7 @@ GIPCY_API long IPC_interlockedExchangeAdd(volatile long *dst, long val )
 
 //-----------------------------------------------------------------------------
 
-#ifdef _WIN64
+#ifdef _UNICODE
 wchar_t* IPC_itoa(int value, wchar_t* result, int base)
 {
 	_itow(value, result, base);
@@ -184,7 +184,7 @@ char* IPC_itoa(int value, char* result, int base)
 
 //-----------------------------------------------------------------------------
 
-#ifdef _WIN64
+#ifdef _UNICODE
 GIPCY_API   int IPC_strlwr(wchar_t *str)
 {
 
